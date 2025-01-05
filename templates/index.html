@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stream Suggestor</title>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-center mb-8">Stream Suggestor</h1>
+        
+        <!-- Multi-step Form -->
+        <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
+            <div class="mb-6">
+                <div class="flex justify-between mb-4">
+                    <span class="step active"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                </div>
+            </div>
+
+            <form id="careerForm" class="space-y-6">
+                <!-- Step 1: Basic Information -->
+                <div class="step-content" id="step1">
+                    <h2 class="text-xl font-semibold mb-4">Your Goals and Interests</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block mb-2">What are your career goals?</label>
+                            <textarea name="goals" class="w-full p-2 border rounded" required></textarea>
+                        </div>
+                        <div>
+                            <label class="block mb-2">What are your interests?</label>
+                            <textarea name="interests" class="w-full p-2 border rounded" required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Skills -->
+                <div class="step-content hidden" id="step2">
+                    <h2 class="text-xl font-semibold mb-4">Your Skills</h2>
+                    <div>
+                        <label class="block mb-2">What skills do you currently have?</label>
+                        <textarea name="currentSkills" class="w-full p-2 border rounded" required></textarea>
+                    </div>
+                </div>
+
+                <!-- Step 3: Results -->
+                <div class="step-content hidden" id="step3">
+                    <h2 class="text-xl font-semibold mb-4">Career Recommendations</h2>
+                    <div id="results" class="space-y-6">
+                        <!-- Results will be populated here -->
+                    </div>
+                    <div id="charts" class="mt-8 space-y-6">
+                        <canvas id="timelineChart"></canvas>
+                        <canvas id="flowChart"></canvas>
+                    </div>
+                    <button type="button" id="downloadPDF" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
+                        Download PDF
+                    </button>
+                </div>
+
+                <div class="flex justify-between mt-6">
+                    <button type="button" id="prevBtn" class="bg-gray-500 text-white px-4 py-2 rounded hidden">
+                        Previous
+                    </button>
+                    <button type="button" id="nextBtn" class="bg-blue-500 text-white px-4 py-2 rounded">
+                        Next
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const form = document.getElementById('careerForm');
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const downloadBtn = document.getElementById('downloadPDF');
+
+        // Navigation functions
+        function showStep(step) {
+            document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`step${step}`).classList.remove('hidden');
+            
+            // Update buttons
+            prevBtn.classList.toggle('hidden', step === 1);
+            nextBtn.textContent = step === 2 ? 'Analyze' : 'Next';
+        }
+
+        nextBtn.addEventListener('click', async () => {
+            if (currentStep === 2) {
+                // Collect form data
+                const formData = {
+                    goals: form.goals.value,
+                    interests: form.interests.value,
+                    currentSkills: form.currentSkills.value
+                };
+
+                try {
+                    const response = await fetch('/analyze', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        displayResults(data);
+                        currentStep++;
+                        showStep(currentStep);
+                    } else {
+                        const error = await response.json();
+                        alert(error.error || 'An error occurred');
+                    }
+                } catch (error) {
+                    alert('An error occurred while analyzing your profile');
+                }
+            } else if (currentStep < 3) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        });
+
+        function displayResults(data) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+
+            data.professions.forEach(profession => {
+                const professionCard = document.createElement('div');
+                professionCard.className = 'bg-white p-4 rounded-lg shadow';
+                professionCard.innerHTML = `
+                    <h3 class="text-xl font-bold mb-2">${profession.name}</h3>
+                    <div class="space-y-2">
+                        <p><strong>Required Skills:</strong> ${profession.requiredSkills.join(', ')}</p>
+                        <p><strong>Career Path:</strong> ${profession.careerPath.join(' → ')}</p>
+                        <p><strong>Salary Range:</strong> ${profession.salaryRange}</p>
+                        <p><strong>Market Statistics:</strong> ${profession.marketStats}</p>
+                        <p><strong>Success Story:</strong> ${profession.successStory}</p>
+                    </div>
+                `;
+                resultsDiv.appendChild(professionCard);
+            });
+
+            // Create visualizations
+            createTimelineChart(data);
+            createFlowChart(data);
+        }
+
+        function createTimelineChart(data) {
+            const ctx = document.getElementById('timelineChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['10th', '12th', 'Bachelor\'s', 'Master\'s', 'Career'],
+                    datasets: data.professions.slice(0, 5).map((profession, index) => ({
+                        label: profession.name,
+                        data: [10, 12, 14, 16, 18].map(() => Math.random() * 100),
+                        borderColor: `hsl(${index * 360 / 5}, 70%, 50%)`,
+                        fill: false
+                    }))
+                },
+                options: {
+                    responsive: true,
+                    title: {
+                        display: true,
+                        text: 'Career Growth Timeline'
+                    }
+                }
+            });
+        }
+
+        function createFlowChart(data) {
+            const ctx = document.getElementById('flowChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Technical Skills', 'Soft Skills', 'Education', 'Experience', 'Market Demand'],
+                    datasets: data.professions.slice(0, 5).map((profession, index) => ({
+                        label: profession.name,
+                        data: [
+                            Math.random() * 100,
+                            Math.random() * 100,
+                            Math.random() * 100,
+                            Math.random() * 100,
+                            Math.random() * 100
+                        ],
+                        backgroundColor: `hsla(${index * 360 / 5}, 70%, 50%, 0.2)`,
+                        borderColor: `hsl(${index * 360 / 5}, 70%, 50%)`
+                    }))
+                },
+                options: {
+                    responsive: true,
+                    title: {
+                        display: true,
+                        text: 'Career Requirements Comparison'
+                    }
+                }
+            });
+        }
+
+        downloadBtn.addEventListener('click', () => {
+            const element = document.getElementById('results');
+            html2pdf()
+                .from(element)
+                .save('career-recommendations.pdf');
+        });
+    </script>
+</body>
+</html>
