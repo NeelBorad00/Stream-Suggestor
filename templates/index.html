@@ -87,7 +87,7 @@
     .question-container {
       background-color: rgba(0, 0, 0, 0.65);
       border-radius: 15px;
-      padding: clamp(20px, 5vw, 40px);
+      padding: clamp(10px, 2vw, 20px);
       box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
       backdrop-filter: blur(10px);
       margin-bottom: 30px;
@@ -95,10 +95,18 @@
       overflow: hidden;
       position: relative;
       border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: height 0.4s cubic-bezier(0.4,0,0.2,1);
+      transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
       height: calc(100vh - 250px);
       display: flex;
       flex-direction: column;
+    }
+
+    .question-container.expanded {
+      width: 98%;
+      max-width: 1400px;
+      margin: 0 auto 30px auto;
+      height: auto;
+      min-height: calc(100vh - 250px);
     }
 
     .step {
@@ -134,7 +142,7 @@
     .step h2 {
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      font-size: clamp(1.2rem, 4vw, 1.8rem);
+      font-size: clamp(1rem, 3vw, 1.5rem);
       color: #ffffff;
       text-align: center;
       font-weight: 400;
@@ -155,8 +163,8 @@
     }
 
     input {
-      padding: clamp(12px, 3vw, 15px) clamp(15px, 4vw, 20px);
-      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+      padding: clamp(8px, 2vw, 12px) clamp(12px, 3vw, 16px);
+      font-size: clamp(0.8rem, 2vw, 1rem);
       font-family: 'Poppins', sans-serif;
       width: 100%;
       border: 2px solid rgba(255, 255, 255, 0.3);
@@ -170,7 +178,7 @@
       color: rgba(255, 255, 255, 0.5);
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      font-size: clamp(0.8rem, 2.5vw, 1rem);
+      font-size: clamp(0.7rem, 2vw, 0.9rem);
     }
 
     input:focus {
@@ -182,8 +190,8 @@
     .arrow-btn {
       background: rgba(255, 255, 255, 0.05);
       color: white;
-      width: clamp(40px, 10vw, 50px);
-      height: clamp(40px, 10vw, 50px);
+      width: clamp(32px, 8vw, 40px);
+      height: clamp(32px, 8vw, 40px);
       border: 2px solid rgba(255, 255, 255, 0.3);
       border-radius: 50%;
       display: flex;
@@ -191,7 +199,7 @@
       justify-content: center;
       cursor: pointer;
       transition: all 0.4s ease-in-out;
-      font-size: clamp(1rem, 3vw, 1.3rem);
+      font-size: clamp(0.8rem, 2.5vw, 1.1rem);
       flex-shrink: 0;
       animation: morph 8s ease-in-out infinite;
       box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.1);
@@ -213,8 +221,8 @@
     }
 
     .examples button {
-      padding: clamp(8px, 2vw, 10px) clamp(15px, 3vw, 20px);
-      font-size: clamp(0.8rem, 2.5vw, 0.95rem);
+      padding: clamp(6px, 1.5vw, 8px) clamp(12px, 2.5vw, 16px);
+      font-size: clamp(0.7rem, 2vw, 0.85rem);
       font-family: 'Poppins', sans-serif;
       border: 2px solid rgba(255, 255, 255, 0.3);
       background: rgba(255, 255, 255, 0.05);
@@ -222,7 +230,7 @@
       cursor: pointer;
       border-radius: 50px;
       transition: all 0.4s ease-in-out;
-      min-width: 80px;
+      min-width: 70px;
       letter-spacing: 0.5px;
     }
 
@@ -332,7 +340,7 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 60px 40px;
+      padding: clamp(30px, 6vw, 50px) clamp(20px, 4vw, 35px);
       box-sizing: border-box;
     }
 
@@ -406,13 +414,13 @@
     }
 
     .salary {
-      margin-top: 2rem;
+      margin-top: 1.5rem;
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      font-size: clamp(1rem, 3vw, 1.3rem);
+      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
       color: #ffffff;
       background: rgba(255, 255, 255, 0.05);
-      padding: 15px 25px;
+      padding: clamp(10px, 2.5vw, 15px) clamp(15px, 3vw, 20px);
       border-radius: 50px;
       display: inline-block;
       transform: scale(0);
@@ -576,15 +584,15 @@
       background: linear-gradient(135deg, #ffd86b 0%, #ff6b6b 100%);
       color: #232323;
       border: none;
-      border-radius: 30px;
-      padding: 15px 30px;
-      font-size: 1rem;
+      border-radius: 25px;
+      padding: clamp(10px, 2.5vw, 12px) clamp(20px, 4vw, 25px);
+      font-size: clamp(0.8rem, 2.5vw, 0.95rem);
       font-family: 'Poppins', sans-serif;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
       outline: none;
-      min-width: 140px;
+      min-width: 120px;
       box-shadow: 0 4px 16px rgba(0,0,0,0.2);
     }
     
@@ -595,119 +603,97 @@
       box-shadow: 0 6px 20px rgba(0,0,0,0.3);
     }
     
-    .expanded-modal {
-      position: fixed;
-      top: 0; left: 0; 
-      background: rgba(0, 0, 0, 0.9);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.35s cubic-bezier(0.4,0,0.2,1);
-      max-height: 100vh;
-      overflow-y: auto;
-      padding: 20px;
-    }
-    
-    .expanded-modal.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    
-    .expanded-card {
-      background: #232323;
-      color: #fff;
-      border-radius: 15px;
-      padding: clamp(30px, 5vw, 48px) clamp(20px, 4vw, 32px) clamp(25px, 4vw, 40px) clamp(20px, 4vw, 32px);
+    .detailed-view {
+      display: none;
       width: 100%;
-      max-width: 800px;
-      box-sizing: border-box;
-      box-shadow: 0 8px 32px 0 rgba(0,0,0,0.45);
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 15px;
+      padding: clamp(20px, 3vw, 30px);
+      margin-top: 20px;
       border: 2px solid #ffd86b;
-      position: relative;
+      box-shadow: 0 8px 32px 0 rgba(255, 216, 107, 0.2);
+      animation: slideDown 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .detailed-view.active {
+      display: block;
+    }
+
+    .detailed-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(20px, 4vw, 30px);
+      align-items: start;
+    }
+
+    .detailed-left, .detailed-right {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      animation: expandIn 0.35s cubic-bezier(0.4,0,0.2,1);
-      transform: scale(0.95);
-      opacity: 0;
-      transition: opacity 0.35s, transform 0.35s;
-      font-family: 'Poppins', sans-serif;
-      max-height: 90vh;
-      overflow-y: auto;
+      gap: 15px;
     }
-    
-    .expanded-modal.active .expanded-card {
-      opacity: 1;
-      transform: scale(1);
-    }
-    
-    .expanded-card h2 {
-      width: 100%;
-      text-align: center;
-      font-size: clamp(1.5rem, 5vw, 2.2rem);
-      font-weight: 800;
-      margin-bottom: 22px;
-      letter-spacing: 1.2px;
-      color: #fff;
-    }
-    
-    .expanded-card h4 {
-      margin-top: 22px;
-      margin-bottom: 10px;
-      font-size: clamp(1rem, 3vw, 1.18rem);
+
+    .detailed-view h3 {
+      font-size: clamp(1.2rem, 3vw, 1.5rem);
       font-weight: 700;
       color: #ffd86b;
-      letter-spacing: 0.7px;
+      margin-bottom: 10px;
+      text-align: center;
     }
-    
-    .expanded-card ul {
-      margin: 0 0 0 18px;
-      padding: 0 0 0 10px;
-      font-size: clamp(0.9rem, 2.5vw, 1.08rem);
-      line-height: 1.7;
-      text-align: left;
-      margin-bottom: 14px;
+
+    .detailed-view h4 {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      font-weight: 600;
+      color: #ffd86b;
+      margin-bottom: 8px;
     }
-    
-    .expanded-card ul li {
-      margin-bottom: 7px;
-    }
-    
-    .expanded-card p {
-      margin: 0 0 10px 0;
-      font-size: clamp(0.9rem, 2.5vw, 1.08rem);
-      line-height: 1.8;
-      text-align: left;
+
+    .detailed-view p, .detailed-view li {
+      font-size: clamp(0.8rem, 2vw, 0.95rem);
+      line-height: 1.6;
       color: #e0e0e0;
+      margin-bottom: 5px;
     }
-    
-    .expanded-card .shrink-btn {
+
+    .detailed-view ul {
+      margin: 0 0 0 15px;
+      padding: 0;
+    }
+
+    .close-details-btn {
       position: absolute;
-      top: 18px;
-      right: 18px;
+      top: 15px;
+      right: 15px;
       background: #fff;
       color: #232323;
       border: none;
       border-radius: 50%;
-      width: clamp(30px, 8vw, 36px);
-      height: clamp(30px, 8vw, 36px);
-      font-size: clamp(1rem, 3vw, 1.3rem);
+      width: clamp(25px, 6vw, 30px);
+      height: clamp(25px, 6vw, 30px);
+      font-size: clamp(0.8rem, 2vw, 1rem);
       cursor: pointer;
-      box-shadow: 0 2px 8px 0 rgba(0,0,0,0.15);
-      z-index: 10;
-      transition: background 0.3s, color 0.3s;
+      transition: all 0.3s ease;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    
-    .expanded-card .shrink-btn:hover {
+
+    .close-details-btn:hover {
       background: #232323;
       color: #ffd86b;
       border: 1px solid #ffd86b;
+    }
+
+    @keyframes slideDown {
+      from { 
+        opacity: 0; 
+        transform: translateY(-20px);
+        max-height: 0;
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0);
+        max-height: 1000px;
+      }
     }
     
     @keyframes expandIn {
@@ -746,39 +732,39 @@
     @media (min-width: 769px) {
       .question-container {
         height: calc(100vh - 300px);
-        max-height: 800px;
+        max-height: 700px;
       }
       
       .result-content {
-        gap: 50px;
-        padding: 40px 0;
+        gap: 40px;
+        padding: 30px 0;
       }
       
       .card-container {
         height: 60%;
-        max-width: 800px;
-        min-height: 400px;
+        max-width: 700px;
+        min-height: 350px;
       }
       
       .career-card {
-        padding: 80px 60px;
+        padding: clamp(40px, 8vw, 60px) clamp(30px, 6vw, 45px);
       }
       
       .result-actions {
-        gap: 30px;
-        margin-top: 50px;
+        gap: 25px;
+        margin-top: 40px;
       }
       
       .nav-btn {
-        width: 60px;
-        height: 60px;
-        font-size: 1.8rem;
+        width: clamp(45px, 8vw, 55px);
+        height: clamp(45px, 8vw, 55px);
+        font-size: clamp(1.2rem, 3vw, 1.6rem);
       }
       
       .expand-btn {
-        padding: 18px 36px;
-        font-size: 1.1rem;
-        min-width: 160px;
+        padding: clamp(12px, 2.5vw, 15px) clamp(25px, 4vw, 30px);
+        font-size: clamp(0.9rem, 2.5vw, 1rem);
+        min-width: 140px;
       }
     }
 
@@ -790,21 +776,22 @@
       }
       
       .question-container {
-        padding: 20px 15px;
+        padding: 15px 10px;
         border-radius: 12px;
       }
       
       .input-container {
-        gap: 10px;
-      }
-      
-      .examples {
         gap: 8px;
       }
       
+      .examples {
+        gap: 6px;
+      }
+      
       .examples button {
-        min-width: 70px;
-        padding: 8px 12px;
+        min-width: 60px;
+        padding: 6px 10px;
+        font-size: clamp(0.6rem, 1.8vw, 0.75rem);
       }
       
       .card-container {
@@ -818,24 +805,25 @@
       }
       
       .nav-btn {
-        width: 45px;
-        height: 45px;
-        font-size: 1.2rem;
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
       }
       
       .expand-btn {
-        padding: 12px 24px;
-        font-size: 0.9rem;
-        min-width: 120px;
+        padding: 10px 20px;
+        font-size: 0.8rem;
+        min-width: 100px;
       }
       
-      .expanded-modal {
-        padding: 10px;
+      .detailed-content {
+        grid-template-columns: 1fr;
+        gap: 15px;
       }
       
-      .expanded-card {
-        padding: 25px 15px;
-        border-radius: 12px;
+      .detailed-view {
+        padding: 15px 10px;
+        margin-top: 15px;
       }
     }
 
@@ -1033,7 +1021,36 @@
           </div>
         </div>
         
-        <div id="expanded-card-modal" class="expanded-modal" style="display:none;"></div>
+        <div id="detailed-view" class="detailed-view">
+          <button class="close-details-btn" onclick="closeDetails()" title="Close details">×</button>
+          <div class="detailed-content">
+            <div class="detailed-left">
+              <h3 id="detail-title">Career Title</h3>
+              <div>
+                <h4>Required Skills</h4>
+                <div id="detail-skills"></div>
+              </div>
+              <div>
+                <h4>Career Path</h4>
+                <div id="detail-path"></div>
+              </div>
+            </div>
+            <div class="detailed-right">
+              <div>
+                <h4>Salary Range</h4>
+                <p id="detail-salary"></p>
+              </div>
+              <div>
+                <h4>Market Stats</h4>
+                <p id="detail-market"></p>
+              </div>
+              <div>
+                <h4>Success Story</h4>
+                <p id="detail-story"></p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1230,44 +1247,36 @@
         console.log('No active profession to expand.');
         return;
       }
-      const modal = document.getElementById('expanded-card-modal');
-      modal.innerHTML = `
-        <div class="expanded-card">
-          <button class="shrink-btn" onclick="shrinkCard()" title="Shrink back">×</button>
-          <h2>${profession.name}</h2>
-          <h4>Required Skills</h4>
-          ${createSkillTags(profession.requiredSkills)}
-          <h4>Career Path</h4>
-          ${createTimelineHTML(profession.careerPath)}
-          <h4>Salary Range</h4>
-          <p>${profession.salaryRange}</p>
-          <h4>Market Stats</h4>
-          <p>${profession.marketStats}</p>
-          <h4>Success Story</h4>
-          <p>${profession.successStory}</p>
-        </div>
-      `;
-      modal.classList.add('active');
-      modal.style.display = 'flex';
-      setTimeout(() => {
-        const card = modal.querySelector('.expanded-card');
-        if (card) card.style.opacity = '1';
-      }, 10);
-      document.body.style.overflow = 'hidden';
+      
+      // Expand the container
+      document.querySelector('.question-container').classList.add('expanded');
+      
+      // Populate the detailed view
+      document.getElementById('detail-title').textContent = profession.name;
+      document.getElementById('detail-skills').innerHTML = createSkillTags(profession.requiredSkills);
+      document.getElementById('detail-path').innerHTML = createTimelineHTML(profession.careerPath);
+      document.getElementById('detail-salary').textContent = profession.salaryRange;
+      document.getElementById('detail-market').textContent = profession.marketStats;
+      document.getElementById('detail-story').textContent = profession.successStory;
+      
+      // Show the detailed view
+      document.getElementById('detailed-view').classList.add('active');
+      
+      // Change button text
+      document.getElementById('expand-btn').textContent = 'Hide Details';
+      document.getElementById('expand-btn').onclick = closeDetails;
     }
     
-    function shrinkCard() {
-      const modal = document.getElementById('expanded-card-modal');
-      const card = modal.querySelector('.expanded-card');
-      if (card) {
-        card.style.opacity = '0';
-        card.style.transform = 'scale(0.95)';
-      }
-      setTimeout(() => {
-        modal.classList.remove('active');
-        modal.innerHTML = '';
-        document.body.style.overflow = '';
-      }, 350);
+    function closeDetails() {
+      // Hide the detailed view
+      document.getElementById('detailed-view').classList.remove('active');
+      
+      // Shrink the container back
+      document.querySelector('.question-container').classList.remove('expanded');
+      
+      // Change button text back
+      document.getElementById('expand-btn').textContent = 'View Details';
+      document.getElementById('expand-btn').onclick = expandCard;
     }
 
     // Enhanced progress-dot animation for analyzing step
@@ -1381,9 +1390,9 @@
         if (idx === 0) card.classList.add('active');
         
         const isDesktop = window.innerWidth > 768;
-        const titleSize = isDesktop ? '2.8rem' : '2.2rem';
-        const textSize = isDesktop ? '1.3rem' : '1.1rem';
-        const margin = isDesktop ? '30px' : '20px';
+        const titleSize = isDesktop ? '2.2rem' : '1.8rem';
+        const textSize = isDesktop ? '1.1rem' : '0.95rem';
+        const margin = isDesktop ? '25px' : '15px';
         
         card.innerHTML = `
           <h3 style="font-size: ${titleSize}; margin-bottom: ${margin}; color: #ffd86b; font-weight: 700; line-height: 1.2;">${profession.name}</h3>
@@ -1404,7 +1413,7 @@
 
     // Make functions globally accessible
     window.expandCard = expandCard;
-    window.shrinkCard = shrinkCard;
+    window.closeDetails = closeDetails;
   </script>
 </body>
 </html>
