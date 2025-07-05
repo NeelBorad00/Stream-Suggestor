@@ -29,6 +29,7 @@
       min-height: 100vh;
       padding: 20px;
       position: relative;
+      overflow: hidden;
     }
 
     body::before {
@@ -59,6 +60,8 @@
       margin: 0 auto;
       position: relative;
       z-index: 1;
+      height: 100vh;
+      overflow: hidden;
     }
 
     h1 {
@@ -89,11 +92,13 @@
       backdrop-filter: blur(10px);
       margin-bottom: 30px;
       width: 100%;
-      overflow: visible;
+      overflow: hidden;
       position: relative;
       border: 1px solid rgba(255, 255, 255, 0.1);
       transition: height 0.4s cubic-bezier(0.4,0,0.2,1);
-      height: auto;
+      height: calc(100vh - 200px);
+      display: flex;
+      flex-direction: column;
     }
 
     .step {
@@ -119,14 +124,22 @@
       transform: translateX(-50px);
     }
 
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 1.5rem;
+    }
+
     .step h2 {
       font-family: 'Playfair Display', serif;
       font-style: italic;
       font-size: clamp(1.2rem, 4vw, 1.8rem);
-      margin-bottom: 1.5rem;
       color: #ffffff;
       text-align: center;
       font-weight: 400;
+      flex: 1;
+      margin: 0;
     }
 
     .input-container {
@@ -284,6 +297,12 @@
       opacity: 0.4;
       pointer-events: none;
       filter: blur(1.5px) grayscale(0.5);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
     }
 
     .career-card.active {
@@ -443,6 +462,51 @@
     .timeline-content strong {
       color: #ffd86b;
       font-weight: 600;
+    }
+
+    /* Skill Tags */
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0;
+    }
+
+    .skill-tag {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ffd86b 100%);
+      color: #232323;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .skill-tag:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .skill-tag:nth-child(2n) {
+      background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+      color: white;
+    }
+
+    .skill-tag:nth-child(3n) {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .skill-tag:nth-child(4n) {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: white;
+    }
+
+    .skill-tag:nth-child(5n) {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      color: white;
     }
 
     @keyframes morph {
@@ -769,26 +833,37 @@
 
       <!-- Step 1 -->
       <div class="step active" id="step-0">
-        <h2>What's your name?</h2>
+        <div class="step-header">
+          <div class="back-btn" onclick="goToLanding()" title="Go back to landing">←</div>
+          <h2>What's your name?</h2>
+        </div>
         <div class="input-container">
           <div class="input-wrapper">
-            <input type="text" id="input-0" name="name" placeholder="Type your name..." required />
+            <input type="text" id="input-0" name="name" placeholder="Type your name..." required onkeypress="handleEnter(event, 0)" />
           </div>
           <div class="arrow-btn" onclick="nextStep()">→</div>
+        </div>
+        <div class="examples">
+          <button onclick="fillExample(0, 'Alex')">Alex</button>
+          <button onclick="fillExample(0, 'Sarah')">Sarah</button>
+          <button onclick="fillExample(0, 'Michael')">Michael</button>
+          <button onclick="fillExample(0, 'Emma')">Emma</button>
         </div>
       </div>
 
       <!-- Step 2 -->
       <div class="step" id="step-1">
-        <h2>What are your career goals?</h2>
-        <div class="input-container">
+        <div class="step-header">
           <div class="back-btn" onclick="prevStep()">←</div>
+          <h2>What are your career goals?</h2>
+        </div>
+        <div class="input-container">
           <div class="input-wrapper">
-            <input type="text" id="input-1" name="goals" placeholder="Type your goal..." required />
+            <input type="text" id="input-1" name="goals" placeholder="Type your goal..." required onkeypress="handleEnter(event, 1)" />
           </div>
           <div class="arrow-btn" onclick="nextStep()">→</div>
         </div>
-        <div class="examples">
+        <div class="examples" id="examples-1">
           <button onclick="fillExample(1, 'Pilot')">Pilot</button>
           <button onclick="fillExample(1, 'Scientist')">Scientist</button>
           <button onclick="fillExample(1, 'Entrepreneur')">Entrepreneur</button>
@@ -798,15 +873,17 @@
 
       <!-- Step 3 -->
       <div class="step" id="step-2">
-        <h2>What are your interests?</h2>
-        <div class="input-container">
+        <div class="step-header">
           <div class="back-btn" onclick="prevStep()">←</div>
+          <h2>What are your interests?</h2>
+        </div>
+        <div class="input-container">
           <div class="input-wrapper">
-            <input type="text" id="input-2" name="interests" placeholder="Type your interest..." required />
+            <input type="text" id="input-2" name="interests" placeholder="Type your interest..." required onkeypress="handleEnter(event, 2)" />
           </div>
           <div class="arrow-btn" onclick="nextStep()">→</div>
         </div>
-        <div class="examples">
+        <div class="examples" id="examples-2">
           <button onclick="fillExample(2, 'Flying')">Flying</button>
           <button onclick="fillExample(2, 'Science')">Science</button>
           <button onclick="fillExample(2, 'Business')">Business</button>
@@ -816,15 +893,17 @@
 
       <!-- Step 4 -->
       <div class="step" id="step-3">
-        <h2>What are your skills?</h2>
-        <div class="input-container">
+        <div class="step-header">
           <div class="back-btn" onclick="prevStep()">←</div>
+          <h2>What are your skills?</h2>
+        </div>
+        <div class="input-container">
           <div class="input-wrapper">
-            <input type="text" id="input-3" name="currentSkills" placeholder="Type your skill..." required />
+            <input type="text" id="input-3" name="currentSkills" placeholder="Type your skill..." required onkeypress="handleEnter(event, 3)" />
           </div>
           <div class="arrow-btn" onclick="submitForm()">→</div>
         </div>
-        <div class="examples">
+        <div class="examples" id="examples-3">
           <button onclick="fillExample(3, 'Leadership')">Leadership</button>
           <button onclick="fillExample(3, 'Spatial Reasoning')">Spatial Reasoning</button>
           <button onclick="fillExample(3, 'Communication')">Communication</button>
@@ -898,6 +977,76 @@
 
     function fillExample(stepIndex, value) {
       document.getElementById(`input-${stepIndex}`).value = value;
+      updateDynamicExamples(stepIndex);
+    }
+
+    function handleEnter(event, stepIndex) {
+      if (event.key === 'Enter') {
+        if (stepIndex === 3) {
+          submitForm();
+        } else {
+          nextStep();
+        }
+      }
+    }
+
+    function goToLanding() {
+      window.location.href = '/';
+    }
+
+    function updateDynamicExamples(stepIndex) {
+      const name = document.getElementById('input-0')?.value || '';
+      const goals = document.getElementById('input-1')?.value || '';
+      const interests = document.getElementById('input-2')?.value || '';
+      
+      // Update examples based on previous answers
+      if (stepIndex === 1 && goals) {
+        const examplesContainer = document.getElementById('examples-2');
+        if (examplesContainer) {
+          const dynamicExamples = getDynamicExamples(goals);
+          examplesContainer.innerHTML = dynamicExamples.map(example => 
+            `<button onclick="fillExample(2, '${example}')">${example}</button>`
+          ).join('');
+        }
+      }
+      
+      if (stepIndex === 2 && interests) {
+        const examplesContainer = document.getElementById('examples-3');
+        if (examplesContainer) {
+          const dynamicExamples = getSkillExamples(interests);
+          examplesContainer.innerHTML = dynamicExamples.map(example => 
+            `<button onclick="fillExample(3, '${example}')">${example}</button>`
+          ).join('');
+        }
+      }
+    }
+
+    function getDynamicExamples(goal) {
+      const examples = {
+        'Pilot': ['Flying', 'Aviation', 'Travel', 'Navigation'],
+        'Scientist': ['Research', 'Experiments', 'Discovery', 'Analysis'],
+        'Entrepreneur': ['Business', 'Innovation', 'Leadership', 'Strategy'],
+        'Doctor': ['Healthcare', 'Medicine', 'Helping People', 'Biology'],
+        'Engineer': ['Technology', 'Problem Solving', 'Design', 'Innovation'],
+        'Artist': ['Creativity', 'Design', 'Expression', 'Visual Arts'],
+        'Teacher': ['Education', 'Helping Others', 'Communication', 'Knowledge'],
+        'Lawyer': ['Justice', 'Law', 'Advocacy', 'Research']
+      };
+      
+      return examples[goal] || ['Technology', 'Science', 'Business', 'Arts'];
+    }
+
+    function getSkillExamples(interest) {
+      const examples = {
+        'Flying': ['Spatial Awareness', 'Quick Decision Making', 'Technical Skills', 'Communication'],
+        'Science': ['Analytical Thinking', 'Research Skills', 'Problem Solving', 'Attention to Detail'],
+        'Business': ['Leadership', 'Strategic Thinking', 'Communication', 'Financial Acumen'],
+        'Healthcare': ['Empathy', 'Attention to Detail', 'Communication', 'Problem Solving'],
+        'Technology': ['Programming', 'Logical Thinking', 'Problem Solving', 'Creativity'],
+        'Arts': ['Creativity', 'Visual Skills', 'Communication', 'Innovation']
+      };
+      
+      return examples[interest] || ['Leadership', 'Communication', 'Problem Solving', 'Creativity'];
     }
 
     function updateCardStack(direction = 'next') {
@@ -964,6 +1113,17 @@
       `;
     }
 
+    function createSkillTags(skills) {
+      if (typeof skills === 'string') {
+        skills = skills.split(',').map(skill => skill.trim());
+      }
+      return `
+        <div class="skill-tags">
+          ${skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+        </div>
+      `;
+    }
+
     function expandCard() {
       if (!careerData || !careerData.professions || careerData.professions.length === 0) {
         console.log('No card data to expand.');
@@ -981,7 +1141,7 @@
           <button class="shrink-btn" onclick="shrinkCard()" title="Shrink back">×</button>
           <h2>${profession.name}</h2>
           <h4>Required Skills</h4>
-          <ul>${profession.requiredSkills.map(skill => `<li>${skill}</li>`).join('')}</ul>
+          ${createSkillTags(profession.requiredSkills)}
           <h4>Career Path</h4>
           ${createTimelineHTML(profession.careerPath)}
           <h4>Salary Range</h4>
@@ -1136,17 +1296,11 @@
         card.innerHTML = `
           <div class="card-front">
             <h3>${profession.name}</h3>
-            <p>Based on your profile, here's what you need:</p>
-            <ul>
-              ${profession.requiredSkills.map(skill => `<li>${skill}</li>`).join('')}
-            </ul>
-            <p class="salary">Salary Range: ${profession.salaryRange}</p>
+            <p class="salary">${profession.salaryRange}</p>
           </div>
           <div class="card-back">
-            <h3>Career Path</h3>
-            ${createTimelineHTML(profession.careerPath)}
-            <p class="market-stats">${profession.marketStats}</p>
-            <p class="success-story">${profession.successStory}</p>
+            <h3>${profession.name}</h3>
+            <p class="salary">${profession.salaryRange}</p>
           </div>
         `;
         cardStack.appendChild(card);
