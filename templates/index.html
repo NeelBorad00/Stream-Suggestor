@@ -311,43 +311,48 @@
       overflow-y: auto;
     }
 
-    /* Amazon-style grid layout */
+    /* Career card containers - similar to question-container */
     .career-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
       width: 100%;
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
-      padding: 0 10px;
+      padding: 0 15px;
+    }
+
+    .career-card-container {
+      background-color: rgba(0, 0, 0, 0.65);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+      position: relative;
+      overflow: hidden;
+      min-height: 250px;
+    }
+
+    .career-card-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+      border-color: #ffd86b;
+    }
+
+    .career-card-container.selected {
+      border-color: #ffd86b;
+      box-shadow: 0 12px 40px 0 rgba(255, 216, 107, 0.3);
+      background-color: rgba(0, 0, 0, 0.75);
     }
 
     .career-card {
-      background: rgba(0, 0, 0, 0.7);
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.3s ease;
-      cursor: pointer;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-height: 200px;
+      height: 100%;
       position: relative;
-      overflow: hidden;
-    }
-
-    .career-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-      border-color: #ffd86b;
-    }
-
-    .career-card.selected {
-      border-color: #ffd86b;
-      box-shadow: 0 8px 25px rgba(255, 216, 107, 0.3);
-      background: rgba(0, 0, 0, 0.8);
     }
 
     .card-header {
@@ -624,18 +629,34 @@
     
     .detailed-view {
       display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      border-radius: 15px;
-      padding: clamp(20px, 3vw, 30px);
-      margin-top: 20px;
-      border: 2px solid #ffd86b;
-      box-shadow: 0 8px 32px 0 rgba(255, 216, 107, 0.2);
-      animation: slideDown 0.4s cubic-bezier(0.4,0,0.2,1);
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      animation: fadeIn 0.3s ease;
     }
 
     .detailed-view.active {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .detailed-view-content {
+      background: rgba(0, 0, 0, 0.9);
+      border-radius: 20px;
+      padding: clamp(25px, 4vw, 40px);
+      border: 2px solid #ffd86b;
+      box-shadow: 0 20px 60px 0 rgba(255, 216, 107, 0.3);
+      max-width: 90%;
+      max-height: 90%;
+      overflow-y: auto;
+      position: relative;
+      animation: scaleIn 0.3s cubic-bezier(0.4,0,0.2,1);
     }
 
     .detailed-content {
@@ -686,38 +707,38 @@
       color: #232323;
       border: none;
       border-radius: 50%;
-      width: clamp(25px, 6vw, 30px);
-      height: clamp(25px, 6vw, 30px);
-      font-size: clamp(0.8rem, 2vw, 1rem);
+      width: clamp(30px, 6vw, 40px);
+      height: clamp(30px, 6vw, 40px);
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
       cursor: pointer;
       transition: all 0.3s ease;
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 1001;
     }
 
     .close-details-btn:hover {
       background: #232323;
       color: #ffd86b;
       border: 1px solid #ffd86b;
+      transform: scale(1.1);
     }
 
-    @keyframes slideDown {
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes scaleIn {
       from { 
         opacity: 0; 
-        transform: translateY(-20px);
-        max-height: 0;
+        transform: scale(0.8);
       }
       to { 
         opacity: 1; 
-        transform: translateY(0);
-        max-height: 1000px;
+        transform: scale(1);
       }
-    }
-    
-    @keyframes expandIn {
-      from { opacity: 0; transform: scale(0.85); }
-      to { opacity: 1; transform: scale(1); }
     }
 
     /* Custom Scrollbar Styling */
@@ -760,14 +781,14 @@
       }
       
       .career-grid {
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 25px;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 30px;
         max-width: 1400px;
       }
       
-      .career-card {
+      .career-card-container {
         padding: 25px;
-        min-height: 220px;
+        min-height: 280px;
       }
       
       .card-title {
@@ -813,13 +834,13 @@
       
       .career-grid {
         grid-template-columns: 1fr;
-        gap: 15px;
+        gap: 20px;
         padding: 0 5px;
       }
       
-      .career-card {
-        padding: 15px;
-        min-height: 180px;
+      .career-card-container {
+        padding: 18px;
+        min-height: 220px;
       }
       
       .card-title {
@@ -841,9 +862,10 @@
         gap: 15px;
       }
       
-      .detailed-view {
-        padding: 15px 10px;
-        margin-top: 15px;
+      .detailed-view-content {
+        padding: 20px 15px;
+        max-width: 95%;
+        max-height: 95%;
       }
     }
 
@@ -875,13 +897,13 @@
       }
       
       .career-grid {
-        gap: 12px;
+        gap: 15px;
         padding: 0 2px;
       }
       
-      .career-card {
-        padding: 12px;
-        min-height: 160px;
+      .career-card-container {
+        padding: 15px;
+        min-height: 200px;
       }
       
       .result-header h2 {
@@ -911,6 +933,12 @@
         width: 25px;
         height: 25px;
         font-size: 0.7rem;
+      }
+      
+      .detailed-view-content {
+        padding: 15px 10px;
+        max-width: 98%;
+        max-height: 98%;
       }
     }
   </style>
@@ -1036,31 +1064,33 @@
         </div>
         
         <div id="detailed-view" class="detailed-view">
-          <button class="close-details-btn" onclick="closeDetails()" title="Close details">×</button>
-          <div class="detailed-content">
-            <div class="detailed-left">
-              <h3 id="detail-title">Career Title</h3>
-              <div>
-                <h4>Required Skills</h4>
-                <div id="detail-skills"></div>
+          <div class="detailed-view-content">
+            <button class="close-details-btn" onclick="closeDetails()" title="Close details">×</button>
+            <div class="detailed-content">
+              <div class="detailed-left">
+                <h3 id="detail-title">Career Title</h3>
+                <div>
+                  <h4>Required Skills</h4>
+                  <div id="detail-skills"></div>
+                </div>
+                <div>
+                  <h4>Career Path</h4>
+                  <div id="detail-path"></div>
+                </div>
               </div>
-              <div>
-                <h4>Career Path</h4>
-                <div id="detail-path"></div>
-              </div>
-            </div>
-            <div class="detailed-right">
-              <div>
-                <h4>Salary Range</h4>
-                <p id="detail-salary"></p>
-              </div>
-              <div>
-                <h4>Market Stats</h4>
-                <p id="detail-market"></p>
-              </div>
-              <div>
-                <h4>Success Story</h4>
-                <p id="detail-story"></p>
+              <div class="detailed-right">
+                <div>
+                  <h4>Salary Range</h4>
+                  <p id="detail-salary"></p>
+                </div>
+                <div>
+                  <h4>Market Stats</h4>
+                  <p id="detail-market"></p>
+                </div>
+                <div>
+                  <h4>Success Story</h4>
+                  <p id="detail-story"></p>
+                </div>
               </div>
             </div>
           </div>
@@ -1195,14 +1225,14 @@
 
     function selectCard(index) {
       // Remove previous selection
-      document.querySelectorAll('.career-card').forEach(card => {
-        card.classList.remove('selected');
+      document.querySelectorAll('.career-card-container').forEach(container => {
+        container.classList.remove('selected');
       });
       
       // Select new card
-      const cards = document.querySelectorAll('.career-card');
-      if (cards[index]) {
-        cards[index].classList.add('selected');
+      const containers = document.querySelectorAll('.career-card-container');
+      if (containers[index]) {
+        containers[index].classList.add('selected');
         currentCardIndex = index;
       }
     }
@@ -1347,9 +1377,12 @@
       const careerGrid = document.getElementById('career-grid');
       careerGrid.innerHTML = '';
       professions.forEach((profession, idx) => {
+        const cardContainer = document.createElement('div');
+        cardContainer.className = 'career-card-container';
+        cardContainer.onclick = () => selectCard(idx);
+        
         const card = document.createElement('div');
         card.className = 'career-card';
-        card.onclick = () => selectCard(idx);
         
         card.innerHTML = `
           <div class="card-header">
@@ -1362,7 +1395,8 @@
           </div>
         `;
         
-        careerGrid.appendChild(card);
+        cardContainer.appendChild(card);
+        careerGrid.appendChild(cardContainer);
       });
       currentCardIndex = 0;
       updateCardCounter(professions.length);
