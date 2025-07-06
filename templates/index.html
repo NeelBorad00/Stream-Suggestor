@@ -281,7 +281,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       padding: 0 10px;
       flex-shrink: 0;
     }
@@ -305,112 +305,131 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      gap: 40px;
-      padding: 30px 0;
+      gap: 20px;
+      padding: 20px 0;
       min-height: 0;
-    }
-
-    .card-container {
-      position: relative;
-      width: 100%;
-      height: 65%;
-      max-width: 700px;
-      margin: 0 auto;
-      min-height: 300px;
-    }
-
-    .career-card {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      transform-style: preserve-3d;
-      transition: transform 0.6s ease, opacity 0.4s;
-      cursor: pointer;
-      background: rgba(0, 0, 0, 0.7);
-      border-radius: 15px;
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      opacity: 0.4;
-      pointer-events: none;
-      filter: blur(1.5px) grayscale(0.5);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: clamp(30px, 6vw, 50px) clamp(20px, 4vw, 35px);
-      box-sizing: border-box;
-    }
-
-    .career-card.active {
-      opacity: 1;
-      pointer-events: auto;
-      filter: none;
-      z-index: 10;
-      border-color: #ffd86b;
-      box-shadow: 0 8px 32px 0 rgba(255, 216, 107, 0.3);
-    }
-
-    .career-card.flipped {
-      transform: rotateY(180deg);
-    }
-
-    .card-front, .card-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      padding: clamp(15px, 4vw, 20px);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
       overflow-y: auto;
     }
 
-    .career-card.active .card-front,
-    .career-card.active .card-back {
-      opacity: 1;
-      pointer-events: auto;
+    /* Amazon-style grid layout */
+    .career-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 10px;
     }
 
-    .card-back {
-      transform: rotateY(180deg);
+    .career-card {
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 200px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .career-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      border-color: #ffd86b;
+    }
+
+    .career-card.selected {
+      border-color: #ffd86b;
+      box-shadow: 0 8px 25px rgba(255, 216, 107, 0.3);
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+    .card-header {
+      margin-bottom: 15px;
+    }
+
+    .card-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #ffd86b;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .card-salary {
+      font-size: 1rem;
+      color: #e0e0e0;
+      font-weight: 500;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 8px 12px;
+      border-radius: 8px;
+      display: inline-block;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .card-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 15px;
+    }
+
+    .view-details-btn {
+      background: linear-gradient(135deg, #ffd86b 0%, #ff6b6b 100%);
+      color: #232323;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      flex: 1;
+      margin-right: 10px;
+    }
+
+    .view-details-btn:hover {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ffd86b 100%);
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+    .card-number {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffd86b;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: 1px solid rgba(255, 216, 107, 0.3);
+    }
+
+    /* Remove old card container and navigation */
+    .card-container {
+      display: none;
     }
 
     .result-actions {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 25px;
-      margin-top: 40px;
-      flex-shrink: 0;
+      display: none;
     }
 
     .nav-btn {
-      background: rgba(255, 255, 255, 0.95);
-      color: #222;
-      width: 50px;
-      height: 50px;
-      border: none;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 1.5rem;
-      transition: all 0.3s ease;
-      outline: none;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      display: none;
     }
 
-    .nav-btn:hover {
-      background: #222;
-      color: #fff;
-      transform: scale(1.08);
+    .expand-btn {
+      display: none;
     }
 
     .salary {
@@ -732,39 +751,37 @@
     @media (min-width: 769px) {
       .question-container {
         height: calc(100vh - 300px);
-        max-height: 700px;
+        max-height: 800px;
       }
       
       .result-content {
-        gap: 40px;
-        padding: 30px 0;
+        gap: 30px;
+        padding: 25px 0;
       }
       
-      .card-container {
-        height: 60%;
-        max-width: 700px;
-        min-height: 350px;
+      .career-grid {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 25px;
+        max-width: 1400px;
       }
       
       .career-card {
-        padding: clamp(40px, 8vw, 60px) clamp(30px, 6vw, 45px);
+        padding: 25px;
+        min-height: 220px;
       }
       
-      .result-actions {
-        gap: 25px;
-        margin-top: 40px;
+      .card-title {
+        font-size: 1.5rem;
       }
       
-      .nav-btn {
-        width: clamp(45px, 8vw, 55px);
-        height: clamp(45px, 8vw, 55px);
-        font-size: clamp(1.2rem, 3vw, 1.6rem);
+      .card-salary {
+        font-size: 1.1rem;
+        padding: 10px 15px;
       }
       
-      .expand-btn {
-        padding: clamp(12px, 2.5vw, 15px) clamp(25px, 4vw, 30px);
-        font-size: clamp(0.9rem, 2.5vw, 1rem);
-        min-width: 140px;
+      .view-details-btn {
+        padding: 10px 20px;
+        font-size: 1rem;
       }
     }
 
@@ -794,26 +811,29 @@
         font-size: clamp(0.6rem, 1.8vw, 0.75rem);
       }
       
-      .card-container {
-        height: 60%;
-        margin: 15px auto;
-      }
-      
-      .result-actions {
+      .career-grid {
+        grid-template-columns: 1fr;
         gap: 15px;
-        margin-top: 20px;
+        padding: 0 5px;
       }
       
-      .nav-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 1.1rem;
+      .career-card {
+        padding: 15px;
+        min-height: 180px;
       }
       
-      .expand-btn {
-        padding: 10px 20px;
+      .card-title {
+        font-size: 1.2rem;
+      }
+      
+      .card-salary {
+        font-size: 0.9rem;
+        padding: 6px 10px;
+      }
+      
+      .view-details-btn {
+        padding: 8px 12px;
         font-size: 0.8rem;
-        min-width: 100px;
       }
       
       .detailed-content {
@@ -854,9 +874,14 @@
         font-size: 0.8rem;
       }
       
-      .card-container {
-        height: 55%;
-        margin: 10px auto;
+      .career-grid {
+        gap: 12px;
+        padding: 0 2px;
+      }
+      
+      .career-card {
+        padding: 12px;
+        min-height: 160px;
       }
       
       .result-header h2 {
@@ -868,29 +893,24 @@
         padding: 8px 14px;
       }
       
-      .nav-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
+      .card-title {
+        font-size: 1.1rem;
       }
       
-      .expand-btn {
-        padding: 10px 20px;
-        font-size: 0.8rem;
-        min-width: 100px;
+      .card-salary {
+        font-size: 0.85rem;
+        padding: 5px 8px;
       }
       
-      .expanded-card {
-        padding: 20px 10px;
-        border-radius: 10px;
+      .view-details-btn {
+        padding: 6px 10px;
+        font-size: 0.75rem;
       }
       
-      .expanded-card .shrink-btn {
-        width: 28px;
-        height: 28px;
-        font-size: 0.9rem;
-        top: 10px;
-        right: 10px;
+      .card-number {
+        width: 25px;
+        height: 25px;
+        font-size: 0.7rem;
       }
     }
   </style>
@@ -1010,14 +1030,8 @@
         </div>
         
         <div class="result-content">
-          <div class="card-container" id="card-stack">
+          <div class="career-grid" id="career-grid">
             <!-- Cards will be dynamically inserted here by JavaScript -->
-          </div>
-          
-          <div class="result-actions">
-            <button class="nav-btn prev-btn" onclick="navigateCards('prev')">←</button>
-            <button class="expand-btn" onclick="expandCard()" id="expand-btn">View Details</button>
-            <button class="nav-btn next-btn" onclick="navigateCards('next')">→</button>
           </div>
         </div>
         
@@ -1170,44 +1184,26 @@
       return examples[interest] || ['Leadership', 'Communication', 'Problem Solving', 'Creativity'];
     }
 
-    function updateCardStack(direction = 'next') {
-      const cards = document.querySelectorAll('.career-card');
-      cards.forEach((card, index) => {
-        const offset = (index - currentCardIndex + cards.length) % cards.length;
-        card.classList.remove('active');
-        
-        // Better animation
-        const scale = offset === 0 ? 1 : 0.9;
-        const translateX = offset * 50;
-        const opacity = offset === 0 ? 1 : 0.4;
-        
-        card.style.transform = `translateX(${translateX}px) scale(${scale})`;
-        card.style.opacity = opacity;
-        card.style.zIndex = cards.length - offset;
-        
-        if (offset === 0) {
-          card.classList.add('active');
-        }
-      });
-      updateCardIndicator();
-    }
 
-    function navigateCards(direction) {
-      const cards = document.querySelectorAll('.career-card');
-      if (cards.length === 0) return;
-      if (direction === 'next') {
-        currentCardIndex = (currentCardIndex + 1) % cards.length;
-      } else {
-        currentCardIndex = (currentCardIndex - 1 + cards.length) % cards.length;
-      }
-      updateCardStack(direction);
-    }
 
-    function updateCardIndicator() {
-      const cards = document.querySelectorAll('.career-card');
+    function updateCardCounter(total) {
       const counter = document.getElementById('card-counter');
-      if (cards.length > 0 && counter) {
-        counter.innerHTML = `${currentCardIndex + 1} of ${cards.length}`;
+      if (counter) {
+        counter.innerHTML = `${total} careers found`;
+      }
+    }
+
+    function selectCard(index) {
+      // Remove previous selection
+      document.querySelectorAll('.career-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      
+      // Select new card
+      const cards = document.querySelectorAll('.career-card');
+      if (cards[index]) {
+        cards[index].classList.add('selected');
+        currentCardIndex = index;
       }
     }
 
@@ -1236,15 +1232,14 @@
       `;
     }
 
-    function expandCard() {
+    function expandCard(index) {
       if (!careerData || !careerData.professions || careerData.professions.length === 0) {
         console.log('No card data to expand.');
         return;
       }
-      const idx = currentCardIndex;
-      const profession = careerData.professions[idx];
+      const profession = careerData.professions[index];
       if (!profession) {
-        console.log('No active profession to expand.');
+        console.log('No profession to expand.');
         return;
       }
       
@@ -1261,10 +1256,6 @@
       
       // Show the detailed view
       document.getElementById('detailed-view').classList.add('active');
-      
-      // Change button text
-      document.getElementById('expand-btn').textContent = 'Hide Details';
-      document.getElementById('expand-btn').onclick = closeDetails;
     }
     
     function closeDetails() {
@@ -1350,70 +1341,42 @@
       }
     }
 
-    // Touch/swipe functionality
-    let touchStartX = 0;
-    let touchEndX = 0;
-    
-    function handleTouchStart(e) {
-      if (e.touches && e.touches.length === 1) {
-        touchStartX = e.touches[0].clientX;
-      }
-    }
-    
-    function handleTouchMove(e) {
-      if (e.touches && e.touches.length === 1) {
-        touchEndX = e.touches[0].clientX;
-      }
-    }
-    
-    function handleTouchEnd(e) {
-      if (touchStartX && touchEndX) {
-        const diff = touchEndX - touchStartX;
-        if (Math.abs(diff) > 50) {
-          if (diff < 0) {
-            navigateCards('next');
-          } else {
-            navigateCards('prev');
-          }
-        }
-      }
-      touchStartX = 0;
-      touchEndX = 0;
-    }
+
 
     function createCareerCards(professions) {
-      const cardStack = document.getElementById('card-stack');
-      cardStack.innerHTML = '';
+      const careerGrid = document.getElementById('career-grid');
+      careerGrid.innerHTML = '';
       professions.forEach((profession, idx) => {
         const card = document.createElement('div');
         card.className = 'career-card';
-        if (idx === 0) card.classList.add('active');
-        
-        const isDesktop = window.innerWidth > 768;
-        const titleSize = isDesktop ? '2.2rem' : '1.8rem';
-        const textSize = isDesktop ? '1.1rem' : '0.95rem';
-        const margin = isDesktop ? '25px' : '15px';
+        card.onclick = () => selectCard(idx);
         
         card.innerHTML = `
-          <h3 style="font-size: ${titleSize}; margin-bottom: ${margin}; color: #ffd86b; font-weight: 700; line-height: 1.2;">${profession.name}</h3>
-          <p style="font-size: ${textSize}; color: #e0e0e0; opacity: 0.9; font-weight: 500; line-height: 1.4;">${profession.salaryRange}</p>
+          <div class="card-header">
+            <div class="card-title">${profession.name}</div>
+            <div class="card-salary">${profession.salaryRange}</div>
+          </div>
+          <div class="card-actions">
+            <button class="view-details-btn" onclick="expandCard(${idx}); event.stopPropagation();">View Details</button>
+            <div class="card-number">${idx + 1}</div>
+          </div>
         `;
         
-        cardStack.appendChild(card);
+        careerGrid.appendChild(card);
       });
       currentCardIndex = 0;
-      updateCardStack();
-      document.getElementById('expand-btn').disabled = professions.length === 0;
+      updateCardCounter(professions.length);
     }
 
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', () => {
-      updateCardStack();
+      // Grid layout is ready by default
     });
 
     // Make functions globally accessible
     window.expandCard = expandCard;
     window.closeDetails = closeDetails;
+    window.selectCard = selectCard;
   </script>
 </body>
 </html>
